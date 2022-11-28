@@ -16,24 +16,23 @@ TeHyratDheInvestimetISPController.get('/',async (req: Request, res: Response, ne
   }
   
 })
-
+TeHyratDheInvestimetISPController.get(
+  '/api/investimet/:year/:quarter',
+  async (req: Request, res: Response, next: NextFunction) => {
+    try{
+      let {year,quarter} = req.params;
+      quarter = "TM"+quarter;
+      let result = await TeHyratDheInvestimetISPService.read_by_quarter(year,quarter);
+      res.status(result.status).send(result)
+    }catch(e){
+      next(e);
+    }
+  })
 TeHyratDheInvestimetISPController.get(
   "/api/investimet/:sheetNo",
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const {sheetNo} = req.params;
-      // const result = await TeHyratDheInvestimetISPService.read_all_data();
-
-      // for(let sheet  of result.data){
-      //   if(sheet.name.replace(/ /g,'') == sheetNo){
-      //     return res.status(result.status).send(sheet);
-      //   }
-      // }
-
-      // return res.status(result.status).send({
-      //   name: sheetNo,
-      //   data: [],
-      // });
       let result = await TeHyratDheInvestimetISPService.read_one_sheet(sheetNo);
       res.status(result.status).send(result)
     } catch (e) {
