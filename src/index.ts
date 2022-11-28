@@ -16,7 +16,7 @@ app.use("/ping", (req: Request, res: Response, next: NextFunction) => {
 
 app.use("/telefonia-fixe", TelefoniaFixeController);
 app.use("/telefonia-mobile", TelefoniaMobileController);
-app.use("/invesimet-isp", TeHyratDheInvestimetISPController);
+app.use("/investimet-isp", TeHyratDheInvestimetISPController);
 // app.get("/api/investimet/:sheetNo",TeHyratSheetController);
 app.get("/api/investimet/:sheetNo", (req,res) => {
     let d = ReadFileData("TeHyratDheInvestimetISP.xlsx");
