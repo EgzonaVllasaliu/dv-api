@@ -4,9 +4,10 @@ import { TeHyratDheInvestimetISPService } from "../services/TeHyratDheInvestimet
 export const TeHyratDheInvestimetISPController: Router = Router();
 
 TeHyratDheInvestimetISPController.get(
-  "/",
+  "/api/investimet/:sheetNo",
   async (req: Request, res: Response, next: NextFunction) => {
     try {
+      const {sheetNo} = req.params;
       const result = await TeHyratDheInvestimetISPService.read_all_data();
 
       res.status(result.status).send({
