@@ -17,7 +17,7 @@ TeHyratDheInvestimetISPController.get('/',async (req: Request, res: Response, ne
   
 })
 TeHyratDheInvestimetISPController.get(
-  '/api/investimet/:year/:quarter',
+  '/api/investimet/date/:year/:quarter',
   async (req: Request, res: Response, next: NextFunction) => {
     try{
       let {year,quarter} = req.params;
@@ -29,7 +29,7 @@ TeHyratDheInvestimetISPController.get(
     }
   })
 TeHyratDheInvestimetISPController.get(
-  "/api/investimet/:sheetNo",
+  "/api/investimet/sheet/:sheetNo",
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const {sheetNo} = req.params;
@@ -40,3 +40,48 @@ TeHyratDheInvestimetISPController.get(
     }
   }
 );
+
+TeHyratDheInvestimetISPController.get(
+  "/api/investimet/tehyrat/:companyName",
+  async (req: Request, res: Response, next: NextFunction) => {
+    try{
+      let {companyName} = req.params;
+      let result = await TeHyratDheInvestimetISPService.readCompanyIncome(companyName);
+      
+      res.status(result.status).send(result.data)
+    }catch(e){
+      console.log(e,' error')
+      next(e);
+    }
+  }
+);
+
+TeHyratDheInvestimetISPController.get(
+  "/api/investimet/invest/:companyName",
+  async (req: Request, res: Response, next: NextFunction) => {
+    try{
+      let {companyName} = req.params;
+      let result = await TeHyratDheInvestimetISPService.readCompanyInvestment(companyName);
+      
+      res.status(result.status).send(result.data)
+    }catch(e){
+      console.log(e,' error')
+      next(e);
+    }
+  }
+);
+TeHyratDheInvestimetISPController.get(
+  "/api/investimet/totalclients/:companyName",
+  async (req: Request, res: Response, next: NextFunction) => {
+    try{
+      let {companyName} = req.params;
+      let result = await TeHyratDheInvestimetISPService.readCompanyTotalClients(companyName);
+      
+      res.status(result.status).send(result.data)
+    }catch(e){
+      console.log(e,' error')
+      next(e);
+    }
+  }
+);
+
