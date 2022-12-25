@@ -169,14 +169,14 @@ export const TeHyratDheInvestimetISPService = {
 
       sheet.data = RemoveIfNameNull(sheet.data as any[])
       sheet.data = RemoveAllNullRows(sheet.data as any[][])
-      // console.log('Sheet name: ',sheet.name+'\n sheet length : ',sheet.data.length);
+      
 
       let income_index  = findIndexOfColumn('Të Hyrat',sheet.data[2] as String[]);
       let investments_index = findIndexOfColumn('Investimet',sheet.data[2] as String[]);
       let individual_users_index = findIndexOfColumn('Individual',sheet.data[2] as String[]);
       let business_users_index = findIndexOfColumn('Biznes',sheet.data[2] as String[]);
       let total_users_index = findIndexOfColumn('Totali',sheet.data[2] as String[]);
-      // console.log("Income IN")
+      
       for(let i = 3; i < sheet.data.length; i++){
         // console.log((sheet.data[i] as string[]))//[0].toUpperCase());
         let new_sheet = sheet.data[i] as string[]
