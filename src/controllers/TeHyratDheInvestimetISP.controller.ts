@@ -84,4 +84,19 @@ TeHyratDheInvestimetISPController.get(
     }
   }
 );
+TeHyratDheInvestimetISPController.get(
+  "/api/investimet/all_data/:companyName",
+  async (req: Request, res: Response, next: NextFunction) => {
+    try{
+      let {companyName} = req.params;
+      companyName = companyName.toLowerCase();
+      let result = await TeHyratDheInvestimetISPService.readDataAboutISP(companyName);
+      
+      res.status(result.status).send(result.data)
+    }catch(e){
+      console.log(e,' error')
+      next(e);
+    }
+  }
+);
 

@@ -1,13 +1,23 @@
+import { response } from "express";
 import { ReadFileData } from "../utils/readFileData";
 import { RemoveAllNullRows } from "../utils/removeAllNullRows";
+import { RemoveIfNameNull } from "../utils/removeIfNameNull";
 
 export const TeHyratDheInvestimetISPService = {
   read_all_data: async () => {
     const data = ReadFileData("TeHyratDheInvestimetISP.xlsx");
+    let result: Array<unknown> = [];
+
+    for(let sheet of data){
+        for(let element of sheet.data){
+          result.push(element)
+          break;
+        }
+      }
 
     //Idea: Njejte si ne file per telefoni fixe
 
-    return { status: 200, data };
+    return { status: 200, data:[1,2,3] };
   },
   read_one_sheet : async (sheetNo: string) =>{
     let d = ReadFileData("TeHyratDheInvestimetISP.xlsx");
@@ -130,6 +140,75 @@ export const TeHyratDheInvestimetISPService = {
     }
     else{
       return{status:400,data: []};
+    }
+  },
+  readDataAboutISP : (companyName: string) => {
+
+    const findIndexOfColumn = (col_name : String, all_cols : String []) => {
+      for(let i = 0; i < all_cols.length; i++){
+        let col = all_cols[i];
+        if(col == '' || col == null){
+          continue;
+        }
+        // console.log("col :"+col+'-----')
+        if(col.toLowerCase() == col_name.toLowerCase()){
+          return i;
+        }
+
+      }
+
+      return all_cols.length - 1;
+    }
+
+    let all_data = ReadFileData("TeHyratDheInvestimetISP.xlsx");
+    let result : Object[] = [];
+    for (let sheet of all_data){
+      if(sheet.name == 'TM4 2018 Te tjerat'){
+        continue;
+      }
+
+      sheet.data = RemoveIfNameNull(sheet.data as any[])
+      sheet.data = RemoveAllNullRows(sheet.data as any[][])
+      // console.log('Sheet name: ',sheet.name+'\n sheet length : ',sheet.data.length);
+
+      let income_index  = findIndexOfColumn('Të Hyrat',sheet.data[2] as String[]);
+      let investments_index = findIndexOfColumn('Investimet',sheet.data[2] as String[]);
+      let individual_users_index = findIndexOfColumn('Individual',sheet.data[2] as String[]);
+      let business_users_index = findIndexOfColumn('Biznes',sheet.data[2] as String[]);
+      let total_users_index = findIndexOfColumn('Totali',sheet.data[2] as String[]);
+      // console.log("Income IN")
+      for(let i = 3; i < sheet.data.length; i++){
+        // console.log((sheet.data[i] as string[]))//[0].toUpperCase());
+        let new_sheet = sheet.data[i] as string[]
+        if (companyName == new_sheet[0].toLowerCase()){
+          
+          let obj = {
+            "year":sheet.name,
+            "income":new_sheet[income_index] ,
+            "investments":new_sheet[investments_index],
+            "indiviual_users":new_sheet[individual_users_index],
+            "business_users":new_sheet[business_users_index],
+            "total_users":new_sheet[total_users_index]
+            
+          }
+          result.push(obj);
+        }
+      }
+    }
+
+    if(result.length > 0){
+      return {
+        status: 200,
+        data: {
+          name: companyName,
+          data: result
+        }
+      }
+    } else {
+      return {
+        status: 400,
+        data: []
+      }
     }
   }
 };
