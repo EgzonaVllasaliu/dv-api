@@ -210,5 +210,36 @@ export const TeHyratDheInvestimetISPService = {
         data: []
       }
     }
+  },
+  getAllOperators : () => {
+    let all_data = ReadFileData("TeHyratDheInvestimetISP.xlsx");
+    let result : Object[] = [];
+    let operators : String [] = [] 
+
+    for (let sheet of all_data){
+      if(sheet.name == 'TM4 2018 Te tjerat'){
+        continue;
+      }
+
+      sheet.data = RemoveIfNameNull(sheet.data as any[])
+      sheet.data = RemoveAllNullRows(sheet.data as any[][])
+
+      for(let i = 3; i < sheet.data.length; i++){
+        let row = sheet.data[i] as String [];
+        if(row[0].toLowerCase() == 'total' || row[0].toLowerCase() == 'Sub total te tjer' || row[0].toLowerCase() == 'Sub total te tjere' || row[0].toLowerCase() == 'Sub total')
+        {
+          continue;
+        }
+
+        if(! operators.includes(row[0])){
+          operators.push(row[0])
+        }
+      }
+    }
+    
+    return {
+      status: 200,
+      data: operators
+    }
   }
 };

@@ -99,4 +99,20 @@ TeHyratDheInvestimetISPController.get(
     }
   }
 );
+TeHyratDheInvestimetISPController.get(
+  "/api/investimet/get_operators",
+  async (req: Request, res: Response, next: NextFunction) => {
+    try{
+      
+      
+      // let result = await TeHyratDheInvestimetISPService.readDataAboutISP(companyName);
+      let result = await TeHyratDheInvestimetISPService.getAllOperators();
+      
+      res.status(result.status).send(result.data)
+    }catch(e){
+      console.log(e,' error')
+      next(e);
+    }
+  }
+);
 
