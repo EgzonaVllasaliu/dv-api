@@ -5,7 +5,6 @@ export const TelefoniaMobileService = {
     let d = ReadFileData("TelefoniaMobileRefactored.xlsx");
     
     for(let sheet of d){
-      console.log(sheet.name)
       if(sheet.name.replace(/ /g,'') == sheetName){
         return {status:200,sheet};
       }
