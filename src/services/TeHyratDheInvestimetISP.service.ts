@@ -176,12 +176,14 @@ export const TeHyratDheInvestimetISPService = {
       let individual_users_index = findIndexOfColumn('Individual',sheet.data[2] as String[]);
       let business_users_index = findIndexOfColumn('Biznes',sheet.data[2] as String[]);
       let total_users_index = findIndexOfColumn('Totali',sheet.data[2] as String[]);
-      
+      let exist : boolean = false;
       for(let i = 3; i < sheet.data.length; i++){
+        
         // console.log((sheet.data[i] as string[]))//[0].toUpperCase());
         let new_sheet = sheet.data[i] as string[]
         if (companyName == new_sheet[0].toLowerCase()){
-          
+          exist = true;
+
           let obj = {
             "year":sheet.name,
             "income":new_sheet[income_index] ,
@@ -193,6 +195,19 @@ export const TeHyratDheInvestimetISPService = {
           }
           result.push(obj);
         }
+      }
+
+      if(!exist){
+        let obj = {
+          "year":sheet.name,
+          "income":"" ,
+          "investments":"",
+          "indiviual_users":"",
+          "business_users":"",
+          "total_users":""
+          
+        }
+        result.push(obj);
       }
     }
 
