@@ -256,5 +256,27 @@ export const TeHyratDheInvestimetISPService = {
       status: 200,
       data: operators
     }
+  },
+  getTime : () => {
+    let data = ReadFileData("TeHyratDheInvestimetISP.xlsx");
+    
+    let result : string[] = [];
+    
+
+    for (let sheet of data){
+      if(sheet.name == 'TM4 2018 Te tjerat'){
+        continue;
+      }
+      else {
+        let time = sheet.name.replace('-',' ');
+        result.push(time);
+      }
+    }
+
+    return {
+      status: 200,
+      data: result
+    };
+
   }
 };
