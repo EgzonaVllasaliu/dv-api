@@ -269,7 +269,7 @@ export const TeHyratDheInvestimetISPService = {
       }
       else {
         let time = sheet.name.replace('-',' ');
-        result.push(time);
+        result.push(time.trim());
       }
     }
 
