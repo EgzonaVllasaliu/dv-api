@@ -7,9 +7,9 @@ TelefoniaMobileController.get(
   "/api/sheet/:sheetName",
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const {sheetName} = req.params;
+      const { sheetName } = req.params;
       let result = await TelefoniaMobileService.read_one_sheet(sheetName);
-      res.status(result.status).send(result)
+      res.status(result.status).send(result);
     } catch (e) {
       next(e);
     }

@@ -4,14 +4,14 @@ import { TelefoniaFixeService } from "../services/TelefoniaFixe.service";
 export const TelefoniaFixeController: Router = Router();
 
 TelefoniaFixeController.get(
-  "/",
+  "/:name",
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const result = await TelefoniaFixeService.read_all_data();
+      const { name } = req.params;
 
-      res.status(result.status).send({
-        data: result.data,
-      });
+      let result = await TelefoniaFixeService.read_sheet_data(name);
+
+      res.status(result.status).send(result);
     } catch (e) {
       next(e);
     }
