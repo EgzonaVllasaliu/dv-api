@@ -132,3 +132,20 @@ TeHyratDheInvestimetISPController.get(
   }
 );
 
+TeHyratDheInvestimetISPController.get(
+  "/api/investimet/get_years",
+  async (req: Request, res: Response, next: NextFunction) => {
+    try{
+      
+      
+      
+      let result = TeHyratDheInvestimetISPService.getYears();
+      
+      res.status(result.status).send(result.data)
+    }catch(e){
+      console.log(e,' error')
+      next(e);
+    }
+  }
+);
+

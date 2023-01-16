@@ -263,5 +263,39 @@ export const TeHyratDheInvestimetISPService = {
       data: result
     };
 
+  },
+
+  getYears : () => {
+    let data = ReadFileData("TeHyratDheInvestimetISP.xlsx");
+    
+    let result : string[] = [];
+    
+
+    for (let sheet of data){
+      if(sheet.name == 'TM4 2018 Te tjerat'){
+        continue;
+      }
+      else {
+        let time = sheet.name.split('-').join(' ').split(' ');
+        let time_arr : string []= []
+        time.forEach(elem => {
+          if(elem != ""){
+            time_arr.push(elem);
+          }
+        })
+        
+        if(!result.includes(time_arr[1])){
+          result.push(time_arr[1]);  
+        }
+        
+
+      }
+    }
+
+    return {
+      status: 200,
+      data: result
+    };
+
   }
 };
