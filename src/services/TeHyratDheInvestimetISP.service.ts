@@ -60,22 +60,7 @@ export const TeHyratDheInvestimetISPService = {
     return {status:400, data: []}
 
   },
-  // read_income_by_year_quarter: async(year: string, quarter: string) => {
-  //   let result: object[] = [];
-  //   const data = ReadFileData("TeHyratDheInvestimetISP.xlsx");
-  //   for( let sheet of data){
-  //     if(sheet.name.includes(year) && sheet.name.includes(quarter)){
-  //       for(let i = 0; i < sheet.data.length; i++){
-  //         if(i>=3){
-  //           let sheet_data: unknown[] = sheet.data[i]; 
-  //           result.push({name: sheet_data[i][0], income: sheet.data[1]})
-  //         }
-  //       }
-  //     }
-  //   }
-
-  //   return {status:200,data: result}
-  // }
+  
   readCompanyIncome :async (companyName : string) => {
     let data = ReadFileData("TeHyratDheInvestimetISP.xlsx");
     let result = [];
