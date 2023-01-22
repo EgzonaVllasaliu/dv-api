@@ -129,6 +129,10 @@ export const TeHyratDheInvestimetISPService = {
   },
   readDataAboutISP : (companyName: string) => {
 
+    if (companyName.toLowerCase() == 'totali'){
+      companyName = 'total'
+    }
+
     const findIndexOfColumn = (col_name : String, all_cols : String []) => {
       for(let i = 0; i < all_cols.length; i++){
         let col = all_cols[i];
@@ -163,7 +167,7 @@ export const TeHyratDheInvestimetISPService = {
       let total_users_index = findIndexOfColumn('Totali',sheet.data[2] as String[]);
       let exist : boolean = false;
 
-      let total_obj : any;
+      
     
       for(let i = 3; i < sheet.data.length; i++){
         
