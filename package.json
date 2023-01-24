@@ -4,10 +4,17 @@
   "description": "Data visualization project",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon",
-    "build": "tsc",
+    "start": "nodemon src/index.ts",
+    "build": "rimraf dist && tsc",
+    "ts.check": "tsc --project tsconfig.json",
+    "add-build": "git add dist",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "pre-commit": [
+    "ts.check",
+    "build",
+    "add-build"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/EgzonaVllasaliu/data-visualization-personal.git"
