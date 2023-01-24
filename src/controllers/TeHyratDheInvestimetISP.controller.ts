@@ -99,6 +99,23 @@ TeHyratDheInvestimetISPController.get(
     }
   }
 );
+
+TeHyratDheInvestimetISPController.get(
+  "/api/investimet/users/:year",
+  async (req: Request, res: Response, next: NextFunction) => {
+    try{
+      let {year} = req.params;
+      year = year.toLowerCase();
+      let result = TeHyratDheInvestimetISPService.readUsersAboutAllISP(year);
+      
+      res.status(result.status).send(result.data)
+    }catch(e){
+      console.log(e,' error')
+      next(e);
+    }
+  }
+);
+
 TeHyratDheInvestimetISPController.get(
   "/api/investimet/get_operators",
   async (req: Request, res: Response, next: NextFunction) => {
@@ -148,4 +165,6 @@ TeHyratDheInvestimetISPController.get(
     }
   }
 );
+
+
 

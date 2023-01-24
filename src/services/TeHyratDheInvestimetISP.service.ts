@@ -220,6 +220,69 @@ export const TeHyratDheInvestimetISPService = {
       }
     }
   },
+  readUsersAboutAllISP : (year : string) => {
+
+    const findIndexOfColumn = (col_name : String, all_cols : String []) => {
+      for(let i = 0; i < all_cols.length; i++){
+        let col = all_cols[i];
+        if(col == '' || col == null){
+          continue;
+        }
+        // console.log("col :"+col+'-----')
+        if(col.toLowerCase() == col_name.toLowerCase()){
+          return i;
+        }
+
+      }
+
+      return all_cols.length - 1;
+    }
+
+    let all_data = ReadFileData("TeHyratDheInvestimetISP.xlsx");
+    let result : Object[] = [];
+    for (let sheet of all_data){
+      if(sheet.name.replace('-',' ').toLowerCase() == year){
+        sheet.data = RemoveIfNameNull(sheet.data as any[])
+        sheet.data = RemoveAllNullRows(sheet.data as any[][])
+
+
+        let individual_users_index = findIndexOfColumn('Individual',sheet.data[2] as String[]);
+        let business_users_index = findIndexOfColumn('Biznes',sheet.data[2] as String[]);
+        let total_users_index = findIndexOfColumn('Totali',sheet.data[2] as String[]);
+        let exist : boolean = false;
+
+        for(let i = 3; i < sheet.data.length; i++){
+          
+          let new_sheet = sheet.data[i] as string[]
+
+          let obj = {
+            "company_name":new_sheet[0],
+            "individual_users":new_sheet[individual_users_index],
+            "business_users":new_sheet[business_users_index],
+            "total_users":new_sheet[total_users_index]
+            
+          }
+          result.push(obj); 
+        
+        }
+      }
+    }
+
+    if(result.length > 0){
+      return {
+        status: 200,
+        data: {
+          name: year,
+          data: result
+        }
+      }
+    } else {
+      return {
+        status: 400,
+        data: []
+      }
+    }
+  },
   getAllOperators : () => {
     let all_data = ReadFileData("TeHyratDheInvestimetISP.xlsx");
     let result : Object[] = [];
