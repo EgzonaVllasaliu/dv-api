@@ -129,6 +129,10 @@ export const TeHyratDheInvestimetISPService = {
   },
   readDataAboutISP : (companyName: string) => {
 
+    if (companyName.toLowerCase() == 'totali'){
+      companyName = 'total'
+    }
+
     const findIndexOfColumn = (col_name : String, all_cols : String []) => {
       for(let i = 0; i < all_cols.length; i++){
         let col = all_cols[i];
@@ -162,9 +166,11 @@ export const TeHyratDheInvestimetISPService = {
       let business_users_index = findIndexOfColumn('Biznes',sheet.data[2] as String[]);
       let total_users_index = findIndexOfColumn('Totali',sheet.data[2] as String[]);
       let exist : boolean = false;
+
+      
+    
       for(let i = 3; i < sheet.data.length; i++){
         
-        // console.log((sheet.data[i] as string[]))//[0].toUpperCase());
         let new_sheet = sheet.data[i] as string[]
         if (companyName == new_sheet[0].toLowerCase()){
           exist = true;
@@ -173,21 +179,24 @@ export const TeHyratDheInvestimetISPService = {
             "year":sheet.name,
             "income":new_sheet[income_index] ,
             "investments":new_sheet[investments_index],
-            "indiviual_users":new_sheet[individual_users_index],
+            "individual_users":new_sheet[individual_users_index],
             "business_users":new_sheet[business_users_index],
             "total_users":new_sheet[total_users_index]
             
           }
           result.push(obj);
         }
+      
       }
+
+      
 
       if(!exist){
         let obj = {
           "year":sheet.name,
           "income":"" ,
           "investments":"",
-          "indiviual_users":"",
+          "individual_users":"",
           "business_users":"",
           "total_users":""
           

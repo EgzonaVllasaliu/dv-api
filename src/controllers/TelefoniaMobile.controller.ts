@@ -15,3 +15,17 @@ TelefoniaMobileController.get(
     }
   }
 );
+
+TelefoniaMobileController.get(
+  "/api/mobile/get_years",
+  async (req: Request, res: Response, next: NextFunction) => {
+    try{
+      let result = TelefoniaMobileService.getYears();
+      
+      res.status(result.status).send(result.data)
+    }catch(e){
+      console.log(e,' error')
+      next(e);
+    }
+  }
+);
