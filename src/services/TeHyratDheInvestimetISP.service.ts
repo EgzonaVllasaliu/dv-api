@@ -63,7 +63,7 @@ export const TeHyratDheInvestimetISPService = {
   
   readCompanyIncome :async (companyName : string) => {
     let data = ReadFileData("TeHyratDheInvestimetISP.xlsx");
-    let result = [];
+    let result : any = [];
     for(let sheet of data){
       let new_sheet  = sheet.data as any[][];
       for(let i = 0; i< new_sheet.length; i++){
@@ -85,7 +85,7 @@ export const TeHyratDheInvestimetISPService = {
   },
   readCompanyInvestment :async (companyName : string) => {
     let data = ReadFileData("TeHyratDheInvestimetISP.xlsx");
-    let result = [];
+    let result : any = [];
     for(let sheet of data){
       let new_sheet  = sheet.data as any[][];
       for(let i = 0; i< new_sheet.length; i++){
@@ -107,7 +107,7 @@ export const TeHyratDheInvestimetISPService = {
   },
   readCompanyTotalClients :async (companyName : string) => {
     let data = ReadFileData("TeHyratDheInvestimetISP.xlsx");
-    let result = [];
+    let result : any = [];
     for(let sheet of data){
       let new_sheet  = sheet.data as any[][];
       for(let i = 0; i< new_sheet.length; i++){
