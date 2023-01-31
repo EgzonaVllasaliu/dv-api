@@ -9,9 +9,9 @@ TelefoniaFixeController.get(
     try {
       const { name } = req.params;
 
-      let result = await TelefoniaFixeService.read_sheet_data(name);
+      // let result = await TelefoniaFixeService.read_sheet_data(name);
 
-      res.status(result.status).send(result);
+      res.status(200).send("Something");
     } catch (e) {
       next(e);
     }

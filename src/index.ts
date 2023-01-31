@@ -14,6 +14,10 @@ app.use("/ping", (req: Request, res: Response, next: NextFunction) => {
   res.status(200).send({ data: "Hello from server" });
 });
 
+app.use("/ping1", (req: Request, res: Response, next: NextFunction) => {
+  res.status(200).send({ data: "Hello from server" });
+});
+
 app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header(
