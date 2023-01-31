@@ -11,6 +11,7 @@ TelefoniaMobileController.get(
       let result = await TelefoniaMobileService.read_one_sheet(sheetName);
       res.status(result.status).send(result);
     } catch (e) {
+      res.status(500).send(e);
       next(e);
     }
   }
@@ -19,12 +20,12 @@ TelefoniaMobileController.get(
 TelefoniaMobileController.get(
   "/api/mobile/get_years",
   async (req: Request, res: Response, next: NextFunction) => {
-    try{
+    try {
       let result = TelefoniaMobileService.getYears();
-      
-      res.status(result.status).send(result.data)
-    }catch(e){
-      console.log(e,' error')
+
+      res.status(result.status).send(result.data);
+    } catch (e) {
+      res.status(500).send(e);
       next(e);
     }
   }
