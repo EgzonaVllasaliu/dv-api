@@ -3,5 +3,5 @@ Data vizualization proejct
 Steps:
 
 Run: 
-npm install
+npm install and then
 npm start
