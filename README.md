@@ -1,4 +1,7 @@
-# data-visualization-personal
+Data vizualization proejct
 
-To start the api run:
-npm start
+Steps:
+
+Run: 
+  npm install
+  npm start
