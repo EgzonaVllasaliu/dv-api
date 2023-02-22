@@ -9,6 +9,20 @@ TelefoniaMobileController.get(
     try {
       const { sheetName } = req.params;
       let result = await TelefoniaMobileService.read_one_sheet(sheetName);
+      res.status(result.status).send(result);      
+    } catch (e) {
+      res.status(500).send(e);
+      next(e);
+    }
+  }
+);
+
+TelefoniaMobileController.get(
+  "/api/sheet/:sheetName/:time",
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { sheetName, time } = req.params;
+      let result = await TelefoniaMobileService.read_one_sheet_with_time(sheetName, time);
       res.status(result.status).send(result);
     } catch (e) {
       res.status(500).send(e);
