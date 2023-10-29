@@ -3,9 +3,15 @@ import { ReadFileData } from "../utils/readFileData";
 import { RemoveAllNullRows } from "../utils/removeAllNullRows";
 import { RemoveIfNameNull } from "../utils/removeIfNameNull";
 
-export const TeHyratDheInvestimetISPService = {
-  read_all_data: async () => {
-    const data = isp();
+export class TeHyratDheInvestimetISPService {
+  ispData: any;
+
+  constructor(){
+    this.ispData = ReadFileData("TeHyratDheInvestimetISP.xlsx");
+    
+  }
+  async read_all_data(){
+    const data = this.ispData;
 
     let result: Array<unknown> = [];
 
@@ -18,10 +24,10 @@ export const TeHyratDheInvestimetISPService = {
 
     //Idea: Njejte si ne file per telefoni fixe
 
-    return { status: 200, data: [1, 2, 3] };
-  },
-  read_one_sheet: async (sheetNo: string) => {
-    let d = isp();
+    return { status: 200, data};
+  }
+  async read_one_sheet(sheetNo: string){
+    let d = this.ispData;
 
     for (let sheet of d) {
       if (sheet.name.replace(/ /g, "") == sheetNo) {
@@ -30,9 +36,9 @@ export const TeHyratDheInvestimetISPService = {
     }
 
     return { status: 400, data: [] as any };
-  },
-  read_by_year: async (year: string) => {
-    const data = isp();
+  }
+  async read_by_year(year: string){
+    const data = this.ispData;
     let result: Array<unknown> = [];
 
     for (let sheet of data) {
@@ -47,9 +53,9 @@ export const TeHyratDheInvestimetISPService = {
       status: 200,
       data: result,
     };
-  },
-  read_by_quarter: async (year: string, quarter: string) => {
-    let data = isp();
+  }
+  async read_by_quarter(year: string, quarter: string) {
+    let data = this.ispData;
     for (let sheet of data) {
       if (sheet.name.includes(year) && sheet.name.includes(quarter)) {
         sheet.data.splice(0, 3);
@@ -59,10 +65,10 @@ export const TeHyratDheInvestimetISPService = {
     }
 
     return { status: 400, data: [] as any };
-  },
+  }
 
-  readCompanyIncome: async (companyName: string) => {
-    let data = isp();
+  async readCompanyIncome(companyName: string){
+    let data = this.ispData;
     let result: any = [];
     for (let sheet of data) {
       let new_sheet = sheet.data as any[][];
@@ -86,9 +92,9 @@ export const TeHyratDheInvestimetISPService = {
     } else {
       return { status: 400, data: [] };
     }
-  },
-  readCompanyInvestment: async (companyName: string) => {
-    let data = isp();
+  }
+  async readCompanyInvestment(companyName: string){
+    let data = this.ispData;
     let result: any = [];
     for (let sheet of data) {
       let new_sheet = sheet.data as any[][];
@@ -112,9 +118,9 @@ export const TeHyratDheInvestimetISPService = {
     } else {
       return { status: 400, data: [] as any };
     }
-  },
-  readCompanyTotalClients: async (companyName: string) => {
-    let data = isp();
+  }
+  async readCompanyTotalClients(companyName: string){
+    let data = this.ispData;
     let result: any = [];
     for (let sheet of data) {
       let new_sheet = sheet.data as any[][];
@@ -138,8 +144,8 @@ export const TeHyratDheInvestimetISPService = {
     } else {
       return { status: 400, data: [] };
     }
-  },
-  readDataAboutISP: (companyName: string) => {
+  }
+  readDataAboutISP(companyName: string) {
     if (companyName.toLowerCase() == "totali") {
       companyName = "total";
     }
@@ -159,7 +165,7 @@ export const TeHyratDheInvestimetISPService = {
       return all_cols.length - 1;
     };
 
-    let all_data = isp();
+    let all_data = this.ispData;
     let result: Object[] = [];
     for (let sheet of all_data) {
       if (sheet.name == "TM4 2018 Te tjerat") {
@@ -235,8 +241,8 @@ export const TeHyratDheInvestimetISPService = {
         data: [] as any,
       };
     }
-  },
-  readUsersAboutAllISP: (year: string) => {
+  }
+  readUsersAboutAllISP(year: string){
     const findIndexOfColumn = (col_name: String, all_cols: String[]) => {
       for (let i = 0; i < all_cols.length; i++) {
         let col = all_cols[i];
@@ -252,7 +258,7 @@ export const TeHyratDheInvestimetISPService = {
       return all_cols.length - 1;
     };
 
-    let all_data = isp();
+    let all_data = this.ispData;
     let result: Object[] = [];
     for (let sheet of all_data) {
       if (sheet.name.replace("-", " ").toLowerCase() == year) {
@@ -301,9 +307,9 @@ export const TeHyratDheInvestimetISPService = {
         data: [] as any,
       };
     }
-  },
-  getAllOperators: () => {
-    let all_data = isp();
+  }
+  getAllOperators(){
+    let all_data = this.ispData;
     let result: Object[] = [];
     let operators: String[] = [];
 
@@ -336,9 +342,9 @@ export const TeHyratDheInvestimetISPService = {
       status: 200,
       data: operators,
     };
-  },
-  getTime: () => {
-    let data = isp();
+  }
+  getTime(){
+    let data = this.ispData;
 
     let result: string[] = [];
 
@@ -355,10 +361,10 @@ export const TeHyratDheInvestimetISPService = {
       status: 200,
       data: result,
     };
-  },
+  }
 
-  getYears: () => {
-    let data = isp();
+  getYears(){
+    let data = this.ispData;
 
     let result: string[] = [];
 
@@ -368,7 +374,7 @@ export const TeHyratDheInvestimetISPService = {
       } else {
         let time = sheet.name.split("-").join(" ").split(" ");
         let time_arr: string[] = [];
-        time.forEach((elem) => {
+        time.forEach((elem: any) => {
           if (elem != "") {
             time_arr.push(elem);
           }
@@ -384,5 +390,7 @@ export const TeHyratDheInvestimetISPService = {
       status: 200,
       data: result,
     };
-  },
-};
+  }
+}
+
+

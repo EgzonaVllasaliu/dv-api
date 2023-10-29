@@ -3,11 +3,13 @@ import { TeHyratDheInvestimetISPService } from "../services/TeHyratDheInvestimet
 
 export const TeHyratDheInvestimetISPController: Router = Router();
 
+const ispService = new TeHyratDheInvestimetISPService();
+
 TeHyratDheInvestimetISPController.get(
   "/",
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const result = await TeHyratDheInvestimetISPService.read_all_data();
+      const result = await ispService.read_all_data();
       res.status(result.status).send({
         data: result.data,
       });
@@ -24,7 +26,7 @@ TeHyratDheInvestimetISPController.get(
     try {
       let { year, quarter } = req.params;
       quarter = "TM" + quarter;
-      let result = await TeHyratDheInvestimetISPService.read_by_quarter(
+      let result = await ispService.read_by_quarter(
         year,
         quarter
       );
@@ -40,7 +42,7 @@ TeHyratDheInvestimetISPController.get(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { sheetNo } = req.params;
-      let result = await TeHyratDheInvestimetISPService.read_one_sheet(sheetNo);
+      let result = await ispService.read_one_sheet(sheetNo);
       res.status(result.status).send(result);
     } catch (e) {
       res.status(500).send(e);
@@ -54,7 +56,7 @@ TeHyratDheInvestimetISPController.get(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       let { companyName } = req.params;
-      let result = await TeHyratDheInvestimetISPService.readCompanyIncome(
+      let result = await ispService.readCompanyIncome(
         companyName
       );
 
@@ -71,7 +73,7 @@ TeHyratDheInvestimetISPController.get(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       let { companyName } = req.params;
-      let result = await TeHyratDheInvestimetISPService.readCompanyInvestment(
+      let result = await ispService.readCompanyInvestment(
         companyName
       );
 
@@ -87,7 +89,7 @@ TeHyratDheInvestimetISPController.get(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       let { companyName } = req.params;
-      let result = await TeHyratDheInvestimetISPService.readCompanyTotalClients(
+      let result = await ispService.readCompanyTotalClients(
         companyName
       );
 
@@ -104,7 +106,7 @@ TeHyratDheInvestimetISPController.get(
     try {
       let { companyName } = req.params;
       companyName = companyName.toLowerCase();
-      let result = await TeHyratDheInvestimetISPService.readDataAboutISP(
+      let result = await ispService.readDataAboutISP(
         companyName
       );
 
@@ -122,7 +124,7 @@ TeHyratDheInvestimetISPController.get(
     try {
       let { year } = req.params;
       year = year.toLowerCase();
-      let result = TeHyratDheInvestimetISPService.readUsersAboutAllISP(year);
+      let result = ispService.readUsersAboutAllISP(year);
 
       res.status(result.status).send(result.data);
     } catch (e) {
@@ -137,7 +139,7 @@ TeHyratDheInvestimetISPController.get(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       // let result = await TeHyratDheInvestimetISPService.readDataAboutISP(companyName);
-      let result = await TeHyratDheInvestimetISPService.getAllOperators();
+      let result = await ispService.getAllOperators();
 
       res.status(result.status).send(result.data);
     } catch (e) {
@@ -150,7 +152,7 @@ TeHyratDheInvestimetISPController.get(
   "/api/investimet/get_time",
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      let result = TeHyratDheInvestimetISPService.getTime();
+      let result = ispService.getTime();
 
       res.status(result.status).send(result.data);
     } catch (e) {
@@ -164,7 +166,7 @@ TeHyratDheInvestimetISPController.get(
   "/api/investimet/get_years",
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      let result = TeHyratDheInvestimetISPService.getYears();
+      let result = ispService.getYears();
 
       res.status(result.status).send(result.data);
     } catch (e) {
